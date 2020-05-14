@@ -19,10 +19,12 @@ nameInput.focus();
 
 otherJobInput.style.display = 'none';
 
-jobTitle.addEventListener('click', (e) => {
+jobTitle.addEventListener('change', (e) => {
     if (jobTitle.value === 'other') {
         otherJobInput.style.display = 'block';
-    } 
+    } else {
+        otherJobInput.style.display = 'none';
+    }
 });
 
 /********** chooseATheme sets the default display value for the color 
@@ -49,7 +51,7 @@ for (let i = 0; i <colorChoices.length - 1; i++) {
  * If they switch back to "select a theme," color options disappear.
  *********/
 
-themeId.addEventListener('click', (e) => {
+themeId.addEventListener('change', (e) => {
     if (themeId.value === 'js puns') {
         chooseATheme.hidden = true;
         for (let i=0; i<colorChoices.length; i++) {
@@ -80,3 +82,22 @@ themeId.addEventListener('click', (e) => {
     }
 });
 
+
+const checkboxes = document.querySelectorAll('.activities input');
+document.querySelector('.activities').addEventListener('change', (e) => {
+    const clicked = e.target;
+    const clickedTime = clicked.getAttribute('data-day-and-time');
+    for (let i = 0; i < checkboxes.length; i++) {
+        const checkboxTime = checkboxes[i].getAttribute('data-day-and-time');
+        if (clickedTime === checkboxTime && clicked !== checkboxes[i]) {
+            if (clicked.checked = true) {
+                checkboxes[i].disabled = true;
+                checkboxes[i].textContent.strike();
+            } else {
+                checkboxes[i].disabled = true;
+            }
+        }
+        
+    }
+
+})
