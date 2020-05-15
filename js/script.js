@@ -84,20 +84,30 @@ themeId.addEventListener('change', (e) => {
     }
 });
 
-
-
-/********** The event listener on the .activities class removes events that are at
+/********** The event listener on the .activities class first totals up any checked items and appends
+ * them to the total at the bottom of the activities section. Then it removes events that are at
  * a conflicting time by striking through them once a user selects another workshop at the
  * same time. 
  *********/
 
-const checkboxes = document.querySelectorAll('.activities input');
+const totalCostP = document.createElement('p');
+document.querySelector('.activities').appendChild(totalCostP);
+let totalCost = 0;
+
 document.querySelector('.activities').addEventListener('change', (e) => {
     const clicked = e.target;
     const clickedTime = clicked.getAttribute('data-day-and-time');
-    const totalCostP = document.createElement('p');
-    totalCostP.className = 'totalCostP';
-    document.querySelector('.activities').appendChild(totalCostP);
+    const checkboxes = document.querySelectorAll('.activities input');
+    const clickedCostAttr = clicked.getAttribute('data-cost');
+    const itemCost = parseFloat(clickedCostAttr);
+
+    if (clicked.checked) {
+        totalCost += itemCost;
+    } else {
+        totalCost -= itemCost;
+    }
+    totalCostP.innerHTML = `Total: ${totalCost}`
+
     for (let i = 0; i < checkboxes.length; i++) {
         const checkboxTime = checkboxes[i].getAttribute('data-day-and-time');
         if (clickedTime === checkboxTime && clicked !== checkboxes[i]) {
@@ -110,19 +120,11 @@ document.querySelector('.activities').addEventListener('change', (e) => {
             }
         } 
     }
-    for (i = 0; i < checkboxes.length; i++) {
-        let totalCost = 0;
-        if (checkboxes[i].checked === true) {
-            totalCost += parseInt(checkboxes[i].getAttribute('data-cost'));
-            totalCostP.innerHTML = `<strong>Total: ${totalCost}</strong>`;
-        }
-    }
 });
 
-const totalCostP = document.createElement('p');
-totalCostP.className = 'totalCostP';
-document.querySelector('.activities').appendChild(totalCostP);
 
-
-
-   
+/********** The event listener on the .activities class first totals up any checked items and appends
+ * them to the total at the bottom of the activities section. Then it removes events that are at
+ * a conflicting time by striking through them once a user selects another workshop at the
+ * same time. 
+ *********/
