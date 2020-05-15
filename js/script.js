@@ -123,8 +123,29 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 });
 
 
-/********** The event listener on the .activities class first totals up any checked items and appends
- * them to the total at the bottom of the activities section. Then it removes events that are at
- * a conflicting time by striking through them once a user selects another workshop at the
- * same time. 
+/********** This section sets the default payment method to credit card. If a user
+ * selects another payment method, the relevant content that corresponds to that 
+ * method is shown and the content corresponding to other methods is hidden.
  *********/
+
+const paymentId = document.querySelector('#payment');
+paymentId.querySelector('option[value="select method').hidden = true;
+paymentId.querySelector('option[value="credit card"]').selected = true;
+document.querySelector('#paypal').hidden = true;
+document.querySelector('#bitcoin').hidden = true;
+
+paymentId.addEventListener('change', (e) => {
+    if (paymentId.value === 'paypal') {
+        document.querySelector('#paypal').hidden = false;
+        document.querySelector('#credit-card').hidden = true;
+        document.querySelector('#bitcoin').hidden = true;
+    } else if (paymentId.value === 'bitcoin') {
+        document.querySelector('#bitcoin').hidden = false;
+        document.querySelector('#paypal').hidden = true;
+        document.querySelector('#credit-card').hidden = true;
+    } else if (paymentId.value === 'credit card') {
+        document.querySelector('#credit-card').hidden = false;
+        document.querySelector('#bitcoin').hidden = true;
+        document.querySelector('#paypal').hidden = true;
+    }
+});
