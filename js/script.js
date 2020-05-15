@@ -57,6 +57,7 @@ themeId.addEventListener('change', (e) => {
         for (let i=0; i<colorChoices.length; i++) {
             if (colorChoices[i].textContent.includes('JS Puns')) {
                 colorChoices[i].hidden = false;
+                chooseATheme.innerHTML = 'Please choose a T-shirt color';
             } else {
                 colorChoices[i].hidden = true;
             }
@@ -66,11 +67,12 @@ themeId.addEventListener('change', (e) => {
         for (let i=0; i<colorChoices.length; i++) {
             if (colorChoices[i].textContent.includes('JS shirt')) {
                 colorChoices[i].hidden = false;
+                 chooseATheme.innerHTML = 'Please choose a T-shirt color';
             } else {
                 colorChoices[i].hidden = true;
             }
         }
-    } else if (themeId.value === 'Select Theme') {
+    } else if (themeId.firstElementChild) {
         chooseATheme.hidden = false;
         for (let i=0; i<colorChoices.length; i++) {
             if (colorChoices[i].textContent.includes('Please select')) {
@@ -83,21 +85,45 @@ themeId.addEventListener('change', (e) => {
 });
 
 
+
+/********** The event listener on the .activities class removes events that are at
+ * a conflicting time by striking through them once a user selects another workshop at the
+ * same time. 
+ *********/
+
 const checkboxes = document.querySelectorAll('.activities input');
 document.querySelector('.activities').addEventListener('change', (e) => {
     const clicked = e.target;
     const clickedTime = clicked.getAttribute('data-day-and-time');
+    const totalCostP = document.createElement('p');
+    totalCostP.className = 'totalCostP';
+    document.querySelector('.activities').appendChild(totalCostP);
     for (let i = 0; i < checkboxes.length; i++) {
         const checkboxTime = checkboxes[i].getAttribute('data-day-and-time');
         if (clickedTime === checkboxTime && clicked !== checkboxes[i]) {
-            if (clicked.checked = true) {
+            if (clicked.checked === true) {
                 checkboxes[i].disabled = true;
-                checkboxes[i].textContent.strike();
+                checkboxes[i].parentElement.style.setProperty('text-decoration', 'line-through');
             } else {
-                checkboxes[i].disabled = true;
+                checkboxes[i].disabled = false;
+                checkboxes[i].parentElement.style.setProperty('text-decoration', 'none');
             }
-        }
-        
+        } 
     }
+    for (i = 0; i < checkboxes.length; i++) {
+        let totalCost = 0;
+        if (checkboxes[i].checked === true) {
+            totalCost += parseInt(checkboxes[i].getAttribute('data-cost'));
+        }
+       
+    }
+    totalCostP.innerHTML = `<strong>Total: ${totalCost}</strong>`;
+});
 
-})
+const totalCostP = document.createElement('p');
+totalCostP.className = 'totalCostP';
+document.querySelector('.activities').appendChild(totalCostP);
+
+
+
+   
