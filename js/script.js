@@ -114,10 +114,9 @@ document.querySelector('.activities').addEventListener('change', (e) => {
         let totalCost = 0;
         if (checkboxes[i].checked === true) {
             totalCost += parseInt(checkboxes[i].getAttribute('data-cost'));
+            totalCostP.innerHTML = `<strong>Total: ${totalCost}</strong>`;
         }
-       
     }
-    totalCostP.innerHTML = `<strong>Total: ${totalCost}</strong>`;
 });
 
 const totalCostP = document.createElement('p');
