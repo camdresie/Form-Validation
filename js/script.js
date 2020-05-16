@@ -98,7 +98,7 @@ document.querySelector('.activities').addEventListener('change', (e) => {
     } else {
         totalCost -= itemCost;
     }
-    totalCostP.innerHTML = `Total: $${totalCost}`
+    totalCostP.innerHTML = `Total: $${totalCost}`;
 
     for (let i = 0; i < checkboxes.length; i++) {
         const checkboxTime = checkboxes[i].getAttribute('data-day-and-time');
