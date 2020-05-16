@@ -76,7 +76,7 @@ themeId.addEventListener('change', (e) => {
     }
 });
 
-/********** The event listener on the .activities class first totals up any checked items and appends
+/********** The event listener on the .activities class first totals up the cost of any checked items and appends
  * them to the total at the bottom of the activities section. Then it removes events that are at
  * a conflicting time by striking through them once a user selects another workshop at the
  * same time. 
