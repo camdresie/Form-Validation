@@ -27,48 +27,42 @@ jobTitle.addEventListener('change', (e) => {
     }
 });
 
-/********** chooseATheme sets the default display value for the color 
- * of a shirt to direct the user to first choose a shirt theme before they can
- * select a shirt color. It also hides all color options from the user until they
- * choose a theme. 
+/********** This section hides the dropdown menu that allows a user to select a shirt color until they have 
+ * selected a theme for the shirt. 
  *********/
 
-const chooseATheme = document.createElement('option');
-chooseATheme.innerHTML = "Please choose a T-shirt theme";
-colorId.append(chooseATheme);
-chooseATheme.selected = true;
-colorId.placeholder = 'Please choose a T-shirt theme';
+
+document.querySelector('#colors-js-puns').hidden = true;
 const colorChoices = document.querySelectorAll('#color option');
-for (let i = 0; i <colorChoices.length - 1; i++) {
-    colorChoices[i].hidden = true;
-}
 
 /********** The event listener on themeId listens for a user's selection 
- * on the shirt theme drop down menu. If a user selects one shirt, they are provided
- * a set of color options corresponding to that shirt. If they select
+ * on the shirt theme drop down menu. Once a theme has been selected, 
+ * the color dropdown corresponding to that theme appears. If a user selects one shirt, 
+ * they are provided a set of color options corresponding to that shirt. If they select
  * the other, they get the color options corresponding to the other shirt. 
- * If they switch back to "select a theme," color options disappear.
+ * This sections also removes "select a theme" as an option, so users don't select it.
  *********/
 
 themeId.addEventListener('change', (e) => {
     if (themeId.value === 'js puns') {
-        chooseATheme.hidden = true;
+      
+        document.querySelector('#colors-js-puns').hidden = false;
         document.querySelector('#design option').hidden = true;
         for (let i=0; i<colorChoices.length; i++) {
             if (colorChoices[i].textContent.includes('JS Puns')) {
                 colorChoices[i].hidden = false;
-                chooseATheme.innerHTML = 'Please choose a T-shirt color';
+                colorChoices[0].selected = true;
             } else {
                 colorChoices[i].hidden = true;
             }
         }
     } else if (themeId.value === 'heart js') {
-        chooseATheme.hidden = true;
+        document.querySelector('#colors-js-puns').hidden = false;
         document.querySelector('#design option').hidden = true;
         for (let i=0; i<colorChoices.length; i++) {
             if (colorChoices[i].textContent.includes('JS shirt')) {
                 colorChoices[i].hidden = false;
-                 chooseATheme.innerHTML = 'Please choose a T-shirt color';
+                colorChoices[3].selected = true;
             } else {
                 colorChoices[i].hidden = true;
             }
@@ -142,10 +136,22 @@ paymentId.addEventListener('change', (e) => {
     }
 });
 
+/********** This creates a div in which to store error messages if any incorrect data is 
+ * supplied by the user. The div is updated depending on which field the incorrect data 
+ * is in. 
+ *********/
+
+const errorDiv = document.createElement('div');
+const errorP = document.createElement('p');
+errorP.className = 'error-p';
+errorDiv.appendChild(errorP);
+form.appendChild(errorDiv);
+
+
 /********** The following functions validate that the input for the name, email, 
  * activities, and credit card (if credit card is the selected payment method) 
- * is valid using regex. If incorrect data is applied, a message pops up 
- * and the relevant field is highlighted in red. 
+ * is valid using regex. If incorrect data is applied, a message is displayed at the bottom of the 
+ * page telling which areas are incorrect and the relevant field is highlighted in red. 
  *********/
 
 const validateName = () => {
@@ -155,7 +161,7 @@ const validateName = () => {
         nameInput.style.setProperty('border', '2px solid rgb(111, 157, 220)');
         return true;
     } else {
-        alert('Must provide a name.');
+        errorP.innerHTML += `You must enter a name.`;
         nameInput.style.setProperty('border', '3px solid red');
         return false;
     }
@@ -168,7 +174,7 @@ const validateEmail = () => {
         document.querySelector('#mail').style.setProperty('border', '2px solid rgb(111, 157, 220)');
         return true;
     } else {
-        alert('Must provide a valid email address.');
+        errorP.innerHTML += `<br>You must enter a valid email address.`;
         document.querySelector('#mail').style.setProperty('border', '3px solid red');
         return false;
     }
@@ -187,7 +193,7 @@ const validateActivities = () => {
         document.querySelector('.activities label').style.setProperty('border', 'none');
         return true;
     } else {
-        alert('Must select at least one activity.')
+        errorP.innerHTML += `<br>You must select at least one activity.`;
         document.querySelector('.activities label').style.setProperty('border', '3px solid red');
         return false;
     }
@@ -201,7 +207,7 @@ const validateCardNumber = () => {
             document.querySelector('#cc-num').style.setProperty('border', '2px solid rgb(111, 157, 220)');
             return true;
         } else {
-            alert('You must enter a valid card number.');
+            errorP.innerHTML += `<br>You must enter a valid credit card number.`;
             document.querySelector('#cc-num').style.setProperty('border', '3px solid red');
             return false;
         }
@@ -216,7 +222,7 @@ const validateCardZip = () => {
             document.querySelector('#zip').style.setProperty('border', '2px solid rgb(111, 157, 220)');
             return true;
         } else {
-            alert('You must enter a valid zip code.');
+            errorP.innerHTML += `<br>You must enter a valid zip code.`;
             document.querySelector('#zip').style.setProperty('border', '3px solid red');
             return false;
         }
@@ -231,7 +237,7 @@ const validateCardCvv = () => {
             document.querySelector('#cvv').style.setProperty('border', '2px solid rgb(111, 157, 220)');
             return true;
         } else {
-            alert('You must enter a CVV.');
+            errorP.innerHTML += `<br>You must enter a valid CVV.`;
             document.querySelector('#cvv').style.setProperty('border', '3px solid red');
             return false;
         }
