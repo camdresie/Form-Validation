@@ -31,7 +31,6 @@ jobTitle.addEventListener('change', (e) => {
  * selected a theme for the shirt. 
  *********/
 
-
 document.querySelector('#colors-js-puns').hidden = true;
 const colorChoices = document.querySelectorAll('#color option');
 
@@ -107,7 +106,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
         } 
     }
 });
-
 
 /********** This section sets the default payment method to credit card. If a user
  * selects another payment method, the relevant content that corresponds to that 
@@ -261,5 +259,3 @@ form.addEventListener('submit', (e) => {
         e.preventDefault();
     }
 });
-
-
