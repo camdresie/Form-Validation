@@ -151,17 +151,21 @@ paymentId.addEventListener('change', (e) => {
     }
 });
 
-/********** FORM VALIDATION
- * 
+/********** The following functions validate that the input for the name, email, 
+ * activities, and credit card (if credit card is the selected payment method) 
+ * is valid using regex. If incorrect data is applied, a message pops up 
+ * and the relevant field is highlighted in red. 
  *********/
 
 const validateName = () => {
     const nameValue = nameInput.value;
     const regex = /[\w]+ ?[\w]*/;
     if (regex.test(nameValue)) {
+        nameInput.style.setProperty('border', '2px solid rgb(111, 157, 220)');
         return true;
     } else {
         alert('Must provide a name.');
+        nameInput.style.setProperty('border', '3px solid red');
         return false;
     }
 }
@@ -170,9 +174,11 @@ const validateEmail = () => {
     const emailValue = document.querySelector('#mail').value;
     const regex = /^[\w | \W]+@[\w | \W]+\.[\w | \W]+$/;
     if (regex.test(emailValue)) {
+        document.querySelector('#mail').style.setProperty('border', '2px solid rgb(111, 157, 220)');
         return true;
     } else {
         alert('Must provide a valid email address.');
+        document.querySelector('#mail').style.setProperty('border', '3px solid red');
         return false;
     }
 }
@@ -183,54 +189,66 @@ const validateActivities = () => {
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             checkboxCount += 1;
-        }   
+        }  
     }
     if (checkboxCount > 0) {
-        return true; 
+        document.querySelector('.activities label').style.setProperty('border', 'none');
+        return true;
     } else {
         alert('Must select at least one activity.')
+        document.querySelector('.activities label').style.setProperty('border', '3px solid red');
         return false;
     }
 }
 
 const validateCardNumber = () => {
-    if (paymentId.querySelector('option[value="credit card"]').selected) {
+    if (paymentId.querySelector('option[value="credit card"]').selected === true) {
         const cardNumber = document.querySelector('#cc-num').value;
-        const regexNumber = /^\d{13}\d?\d?\d?\d?$/;
+        const regexNumber = /^\d{13}\d?\d?\d?\d?/;
         if (regexNumber.test(cardNumber)) {
-            return true
+            document.querySelector('#cc-num').style.setProperty('border', '2px solid rgb(111, 157, 220)');
+            return true;
         } else {
             alert('You must enter a valid card number.');
+            document.querySelector('#cc-num').style.setProperty('border', '3px solid red');
             return false;
         }
     }
 }
 
 const validateCardZip = () => {
-    if (paymentId.querySelector('option[value="credit card"]').selected) {
+    if (paymentId.querySelector('option[value="credit card"]').selected === true) {
         const cardZip = document.querySelector('#zip').value;
         const regexZip = /^\d{5}$/;
         if (regexZip.test(cardZip)) {
-            return true
+            document.querySelector('#zip').style.setProperty('border', '2px solid rgb(111, 157, 220)');
+            return true;
         } else {
             alert('You must enter a valid zip code.');
+            document.querySelector('#zip').style.setProperty('border', '3px solid red');
             return false;
         }
     }
 }
 
 const validateCardCvv = () => {
-    if (paymentId.querySelector('option[value="credit card"]').selected) {
+    if (paymentId.querySelector('option[value="credit card"]').selected === true) {
         const cardCvv = document.querySelector('#cvv').value;
         const regexCvv = /^\d{3}$/;
         if (regexCvv.test(cardCvv)) {
-            return true
+            document.querySelector('#cvv').style.setProperty('border', '2px solid rgb(111, 157, 220)');
+            return true;
         } else {
             alert('You must enter a CVV.');
+            document.querySelector('#cvv').style.setProperty('border', '3px solid red');
             return false;
         }
     }
 }
+
+/********** This event listener calls each of the above functions when a user submits the form. It then 
+ * prevents the form from being submitted if one of the fields is not correct. 
+ *********/
 
 form.addEventListener('submit', (e) => {
     validateName();
@@ -239,6 +257,10 @@ form.addEventListener('submit', (e) => {
     validateCardNumber();
     validateCardZip();
     validateCardCvv();
-})
+    if (!validateName() || !validateEmail() || !validateActivities() || !validateCardNumber()
+    || !validateCardZip() || !validateCardCvv()) {
+        e.preventDefault();
+    }
+});
 
 
