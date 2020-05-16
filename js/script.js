@@ -6,6 +6,7 @@ const jobTitle = document.querySelector('#title')
 const otherJobInput = document.querySelector('#other-title');
 const themeId = document.querySelector('#design');
 const colorId = document.querySelector('#color');
+const form = document.querySelector('form');
 
 /********** This gives the name input focus when the page is loaded.
  *********/
@@ -149,3 +150,95 @@ paymentId.addEventListener('change', (e) => {
         document.querySelector('#paypal').hidden = true;
     }
 });
+
+/********** FORM VALIDATION
+ * 
+ *********/
+
+const validateName = () => {
+    const nameValue = nameInput.value;
+    const regex = /[\w]+ ?[\w]*/;
+    if (regex.test(nameValue)) {
+        return true;
+    } else {
+        alert('Must provide a name.');
+        return false;
+    }
+}
+
+const validateEmail = () => {
+    const emailValue = document.querySelector('#mail').value;
+    const regex = /^[\w | \W]+@[\w | \W]+\.[\w | \W]+$/;
+    if (regex.test(emailValue)) {
+        return true;
+    } else {
+        alert('Must provide a valid email address.');
+        return false;
+    }
+}
+
+const validateActivities = () => {
+    const checkboxes = document.querySelectorAll('.activities input');
+    const checkboxCount = 0;
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            checkboxCount += 1;
+        }   
+    }
+    if (checkboxCount > 0) {
+        return true; 
+    } else {
+        alert('Must select at least one activity.')
+        return false;
+    }
+}
+
+const validateCardNumber = () => {
+    if (paymentId.querySelector('option[value="credit card"]').selected) {
+        const cardNumber = document.querySelector('#cc-num').value;
+        const regexNumber = /^\d{13}\d?\d?\d?\d?$/;
+        if (regexNumber.test(cardNumber)) {
+            return true
+        } else {
+            alert('You must enter a valid card number.');
+            return false;
+        }
+    }
+}
+
+const validateCardZip = () => {
+    if (paymentId.querySelector('option[value="credit card"]').selected) {
+        const cardZip = document.querySelector('#zip').value;
+        const regexZip = /^\d{5}$/;
+        if (regexZip.test(cardZip)) {
+            return true
+        } else {
+            alert('You must enter a valid zip code.');
+            return false;
+        }
+    }
+}
+
+const validateCardCvv = () => {
+    if (paymentId.querySelector('option[value="credit card"]').selected) {
+        const cardCvv = document.querySelector('#cvv').value;
+        const regexCvv = /^\d{3}$/;
+        if (regexCvv.test(cardCvv)) {
+            return true
+        } else {
+            alert('You must enter a CVV.');
+            return false;
+        }
+    }
+}
+
+form.addEventListener('submit', (e) => {
+    validateName();
+    validateEmail();
+    validateActivities();
+    validateCardNumber();
+    validateCardZip();
+    validateCardCvv();
+})
+
+
