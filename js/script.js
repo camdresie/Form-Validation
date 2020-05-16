@@ -185,10 +185,11 @@ const validateEmail = () => {
 
 const validateActivities = () => {
     const checkboxes = document.querySelectorAll('.activities input');
-    const checkboxCount = 0;
+    let checkboxCount = 0;
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             checkboxCount += 1;
+            console.log(checkboxCount);
         }  
     }
     if (checkboxCount > 0) {
