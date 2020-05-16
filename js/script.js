@@ -19,7 +19,6 @@ nameInput.focus();
  *********/
 
 otherJobInput.style.display = 'none';
-
 jobTitle.addEventListener('change', (e) => {
     if (jobTitle.value === 'other') {
         otherJobInput.style.display = 'block';
@@ -38,7 +37,6 @@ const chooseATheme = document.createElement('option');
 chooseATheme.innerHTML = "Please choose a T-shirt theme";
 colorId.append(chooseATheme);
 chooseATheme.selected = true;
-
 colorId.placeholder = 'Please choose a T-shirt theme';
 const colorChoices = document.querySelectorAll('#color option');
 for (let i = 0; i <colorChoices.length - 1; i++) {
