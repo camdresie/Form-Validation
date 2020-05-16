@@ -55,6 +55,7 @@ for (let i = 0; i <colorChoices.length - 1; i++) {
 themeId.addEventListener('change', (e) => {
     if (themeId.value === 'js puns') {
         chooseATheme.hidden = true;
+        document.querySelector('#design option').hidden = true;
         for (let i=0; i<colorChoices.length; i++) {
             if (colorChoices[i].textContent.includes('JS Puns')) {
                 colorChoices[i].hidden = false;
@@ -65,6 +66,7 @@ themeId.addEventListener('change', (e) => {
         }
     } else if (themeId.value === 'heart js') {
         chooseATheme.hidden = true;
+        document.querySelector('#design option').hidden = true;
         for (let i=0; i<colorChoices.length; i++) {
             if (colorChoices[i].textContent.includes('JS shirt')) {
                 colorChoices[i].hidden = false;
@@ -73,15 +75,6 @@ themeId.addEventListener('change', (e) => {
                 colorChoices[i].hidden = true;
             }
         }
-    } else if (themeId.firstElementChild) {
-        chooseATheme.hidden = false;
-        for (let i=0; i<colorChoices.length; i++) {
-            if (colorChoices[i].textContent.includes('Please select')) {
-                colorChoices[i].hidden = true;
-            } else if (colorChoices[i].textContent.includes('JS')) {
-                colorChoices[i].hidden = true;
-             }
-         }
     }
 });
 
