@@ -248,18 +248,19 @@ const validateCardCvv = () => {
 }
 
 /********** This event listener calls each of the above functions when a user submits the form. It then 
- * prevents the form from being submitted if one of the fields is not correct. 
+ * saves the output of each function for evaluating whether it returned true or false. These values are then used to
+ * prevent the form from being submitted if one of the fields evaluates to false (i.e. is not correct). 
  *********/
 
 form.addEventListener('submit', (e) => {
-    validateName();
-    validateEmail();
-    validateActivities();
-    validateCardNumber();
-    validateCardZip();
-    validateCardCvv();
-    if (!validateName() || !validateEmail() || !validateActivities() || !validateCardNumber()
-    || !validateCardZip() || !validateCardCvv()) {
+    validateNameEval = validateName();
+    validateEmailEval = validateEmail();
+    validateActivitiesEval = validateActivities();
+    validateCardNumberEval = validateCardNumber();
+    validateCardZipEval = validateCardZip();
+    validateCardCvvEval = validateCardCvv();
+    if (!validateNameEval || !validateEmailEval || !validateActivitiesEval || !validateCardNumberEval
+    || !validateCardZipEval || !validateCardCvvEval) {
         e.preventDefault();
     }
 });
