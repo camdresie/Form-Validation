@@ -254,8 +254,14 @@ form.addEventListener('submit', (e) => {
     validateCardNumberEval = validateCardNumber();
     validateCardZipEval = validateCardZip();
     validateCardCvvEval = validateCardCvv();
-    if (!validateNameEval || !validateEmailEval || !validateActivitiesEval || !validateCardNumberEval
-    || !validateCardZipEval || !validateCardCvvEval) {
-        e.preventDefault();
+    if (paymentId.value === 'credit card') {
+        if (!validateNameEval || !validateEmailEval || !validateActivitiesEval || !validateCardNumberEval
+        || !validateCardZipEval || !validateCardCvvEval) {
+            e.preventDefault();
+        }
+    } else if (paymentId.value === 'paypal' || paymentId.value === 'bitcoin') {
+        if (!validateNameEval || !validateEmailEval || !validateActivitiesEval) {
+            e.preventDefault();
+        }
     }
 });
